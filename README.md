@@ -30,10 +30,15 @@ Under **Security groups**
 Under **Listeners and routing**
 1. Set the Protocol and Port - *In our case it will be HTTP and 8000*
 2. In this stage we will be asked to select or create a taget group where our requests will be routed.
+   
    2.1 Lets create , Under **Basic configuration** select Instances.
+   
    2.2 Set a **Target group name** and set the port.
+   
    2.3 Click on create and you will be redirected to a page where you need to register the instances.
+   
    2.4 Create EC2 instances if not already created with below user data.
+   
 ```HTML
 touch index.html
 cat <<EOT >> index.html
