@@ -12,3 +12,12 @@ Below the 3 LBs available in AWS to use (Classic LB can be created but is not su
 
 # 1. Application Load Balancer (HTTP / HTTPS)
 
+Steps to create.
+Under **Basic configuration**
+1. Give your LB a name under **Load balancer name**.
+2. Under **Scheme** set it as **Internet-facing**
+Under **Network mapping**
+1. Under **VPC** select your VPC if you have one or AWS Default VPC will be selected.
+2. In **Mappings** select the pulic AZs.
+Under **Security groups**
+
