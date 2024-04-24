@@ -50,4 +50,4 @@ EOT
 
 python3 -m http.server 8000
 ```   
-
+   2.5 Register the instances as target.
