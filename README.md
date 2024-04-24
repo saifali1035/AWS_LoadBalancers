@@ -17,9 +17,37 @@ Under **Basic configuration**
 1. Give your LB a name under **Load balancer name**.
 2. Under **Scheme** set it as **Internet-facing**
 
+
 Under **Network mapping**
 1. Under **VPC** select your VPC if you have one or AWS Default VPC will be selected.
 2. In **Mappings** select the pulic AZs.
 
+
 Under **Security groups**
+1. Create inbound and outbound rules *In our case we will create an App that will be running on port 8000 so we will create inbound rule to allow traffic from anywhere on port 8080 and outbound we will allow outbound traffic to the set instance security groups*
+
+
+Under **Listeners and routing**
+1. Set the Protocol and Port - *In our case it will be HTTP and 8000*
+2. In this stage we will be asked to select or create a taget group where our requests will be routed.
+   2.1 Lets create , Under **Basic configuration** select Instances.
+   2.2 Set a **Target group name** and set the port.
+   2.3 Click on create and you will be redirected to a page where you need to register the instances.
+   2.4 Create EC2 instances if not already created with below user data.
+```HTML
+touch index.html
+cat <<EOT >> index.html
+<!doctype html>
+<html>
+  <head>
+    <title>This is the title of the webpage!</title>
+  </head>
+  <body>
+          <p>This response is from ec2 instance</p>
+  </body>
+</html>
+EOT
+
+python3 -m http.server 8000
+```   
 
