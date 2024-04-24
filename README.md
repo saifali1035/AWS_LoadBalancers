@@ -37,7 +37,7 @@ Under **Listeners and routing**
    
    2.3 Click on create and you will be redirected to a page where you need to register the instances.
    
-   2.4 Create EC2 instances if not already created with below user data.
+   2.4 Create EC2 instances if not already created with below user data and register them as targets.
    
 ```HTML
 touch index.html
@@ -55,4 +55,4 @@ EOT
 
 python3 -m http.server 8000
 ```   
-      2.5 Register the instances as target.
+
