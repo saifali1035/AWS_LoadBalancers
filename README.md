@@ -16,8 +16,10 @@ Steps to create.
 Under **Basic configuration**
 1. Give your LB a name under **Load balancer name**.
 2. Under **Scheme** set it as **Internet-facing**
+
 Under **Network mapping**
 1. Under **VPC** select your VPC if you have one or AWS Default VPC will be selected.
 2. In **Mappings** select the pulic AZs.
+
 Under **Security groups**
 
