@@ -6,3 +6,8 @@ Link to access LBs - https://ap-south-1.console.aws.amazon.com/ec2/home?region=a
 
 As the name states LBs are used to balance the load or traffic between the target groups that you define for the LBs.
 
+Below the 3 LBs available in AWS to use.
+<img width="635" alt="image" src="https://github.com/saifali1035/AWS_LoadBalancers/assets/37189361/7ef95fc0-5e3e-4178-979c-74edf903778a">
+
+# 1. Application Load Balancer (HTTP / HTTPS)
+
