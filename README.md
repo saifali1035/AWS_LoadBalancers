@@ -39,20 +39,9 @@ Under **Listeners and routing**
    
    2.4 Create EC2 instances if not already created with below user data and register them as targets.
    
-```HTML
-touch index.html
-cat <<EOT >> index.html
-<!doctype html>
-<html>
-  <head>
-    <title>This is the title of the webpage!</title>
-  </head>
-  <body>
-          <p>This response is from ec2 instance</p>
-  </body>
-</html>
-EOT
-
-python3 -m http.server 8000
+```bash
+#!/usr/bin/env bash
+echo "Hi this is a web page" > /home/ubuntu/index.html
+python3 -m http.server 8000 --directory /home/ubuntu/ &
 ```   
 
