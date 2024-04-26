@@ -24,8 +24,11 @@ Under **Network mapping**
 
 
 Under **Security groups**
-1. Create inbound and outbound rules *In our case we will create an App that will be running on port 8000 so we will create inbound rule to allow traffic from anywhere on port 8080 and outbound we will allow outbound traffic to the set instance security groups*
+1. Create inbound and outbound rules
 
+   *In our case we will create an App that will be running on port 8000 so we will create inbound rule to allow traffic from anywhere on port 80 and outbound we will allow outbound traffic to the set instance security groups*
+
+    *and For EC2 instances , inbound rule will be custom TCP for 8000 with source as load balancers and outbound will be anywhere*
 
 Under **Listeners and routing**
 1. Set the Protocol and Port - *In our case it will be HTTP and 8000*
