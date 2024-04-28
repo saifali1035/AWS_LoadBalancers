@@ -4,6 +4,7 @@ resource "aws_instance" "Web-server" {
   instance_type = "t2.micro"
   security_groups = [aws_security_group.instance-security-group.name]
   user_data = file("${path.module}/script.sh")
+  associate_public_ip_address = "false"
   tags = {
     Name = "Web-Server"
   }

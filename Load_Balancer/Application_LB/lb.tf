@@ -26,6 +26,10 @@ resource "aws_lb" "Web-server-lb" {
     load_balancer_type = "application"
     security_groups = [aws_security_group.load-balancer-security-group.id] 
     subnets = [ aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id ]
+      access_logs {
+    bucket  = aws_s3_bucket.lb_logs.id
+    enabled = true
+  }
     }
 
 resource "aws_lb_target_group" "Web-server-TG" {
@@ -55,6 +59,8 @@ resource "aws_lb_listener" "Web-Server-listener" {
     target_group_arn = aws_lb_target_group.Web-server-TG.arn
   }
 }
+
+data "aws_elb_service_account" "elb_account_id" {}
 
 output "lb_dns_name" {
   description = "The DNS name of the load balancer."
