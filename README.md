@@ -91,6 +91,32 @@ resource "aws_security_group" "load-balancer-security-group" {
 
     *and For EC2 instances , inbound rule will be custom TCP for 8000 with source as load balancers and outbound will be anywhere*
 
+```HCL
+resource "aws_security_group" "instance-security-group" {
+    egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    }
+
+    ingress  {
+      from_port        = 8000
+      to_port          = 8000
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+    }
+
+}
+```
+
 Under **Listeners and routing**
 1. Set the Protocol and Port - *In our case it will be HTTP and 8000*
 2. In this stage we will be asked to select or create a taget group where our requests will be routed.
