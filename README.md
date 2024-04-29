@@ -1,5 +1,6 @@
 # AWS_LoadBalancers
-AWS Load Balancers
+
+We will be creating AWS Load Balancers using console and terraform in this repo.
 
 Link to access LBs - https://ap-south-1.console.aws.amazon.com/ec2/home?region=ap-south-1#LoadBalancers:
 
@@ -387,7 +388,7 @@ dns -> you will be redirected to first target group
 dns/second.html -> you will be redirected to second target group
 
 
-
+# 1. Application Load Balancer (HTTP / HTTPS) - Understanding the terraform files
 
 
 
