@@ -185,11 +185,48 @@ resource "aws_lb_target_group_attachment" "Web-server-2-TG-attachment" {
    2.3 Click on create and you will be redirected to a page where you need to register the instances.
    
    2.4 Create EC2 instances if not already created with below user data and register them as targets.
+```HCL
+resource "aws_instance" "Web-server" {
+  count = 2
+  ami = "ami-0f58b397bc5c1f2e8"
+  instance_type = "t2.micro"
+  security_groups = [aws_security_group.instance-security-group.name]
+  user_data = file("${path.module}/script.sh")
+  associate_public_ip_address = "false"
+  tags = {
+    Name = "Web-Server"
+  }
+}
+
+resource "aws_instance" "Web-server-2" {
+  count = 2
+  ami = "ami-0f58b397bc5c1f2e8"
+  instance_type = "t2.micro"
+  security_groups = [aws_security_group.instance-security-group.name]
+  user_data = file("${path.module}/second_script.sh")
+  associate_public_ip_address = "false"
+  tags = {
+    Name = "Web-Server-2"
+  }
+}
+
+
+
+```
    
 ```bash
+script.sh
 #!/usr/bin/env bash
 IP=$(curl -s ifconfig.me)
 echo "Hi this is a web page and this reply is coming from $IP" > /home/ubuntu/index.html
+python3 -m http.server 8000 --directory /home/ubuntu/ &
+```
+
+```bash
+second_script.sh
+#!/usr/bin/env bash
+IP=$(curl -s ifconfig.me)
+echo "Hi this is the second page and this reply is coming from $IP" > /home/ubuntu/second.html
 python3 -m http.server 8000 --directory /home/ubuntu/ &
 ```   
 
