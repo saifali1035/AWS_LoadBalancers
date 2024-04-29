@@ -261,11 +261,71 @@ Then we will enable access logs for ALB.
 1. Open the load balancer details page by clicking on load balancer name.
 2. Go to Attributes tab.
 3. Meanwhile create a bucket in the same region as ALB.
-4. Enable monitoring and give loaction as S3 bucket.
+```HCL
+resource "aws_s3_bucket" "lb_logs" {
+  bucket = "lb-logs-saif1035"
+  force_destroy = true
+}
+```
+5. Enable monitoring and give loaction as S3 bucket.
 
 <img width="1500" alt="image" src="https://github.com/saifali1035/AWS_LoadBalancers/assets/37189361/a6d2905b-4d22-4526-aa76-b9fc3f0355aa">
 
-5. Attach below policy to bucket so ALB service can access S3.
+5. Attach below policy to bucket so ALB service will be able to access S3.
+
+```HCL
+data "aws_caller_identity" "current" {}
+data "aws_elb_service_account" "elb_account_id" {}
+
+resource "aws_s3_bucket_policy" "policyforlb" {
+  bucket = aws_s3_bucket.lb_logs.id
+  policy = data.aws_iam_policy_document.allow_lb.json
+}
+
+data "aws_iam_policy_document" "allow_lb" {
+statement {
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.lb_logs.bucket}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+    ]
+    actions = ["s3:PutObject"]
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_elb_service_account.elb_account_id.id}:root"]
+    }
+  }
+
+  statement {
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.lb_logs.bucket}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+    ]
+    actions = ["s3:PutObject"]
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+      values   = ["bucket-owner-full-control"]
+    }
+  }
+
+  statement {
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.lb_logs.bucket}",
+    ]
+    actions = ["s3:GetBucketAcl"]
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+  }
+
+}
+```
 
 ```JSON
 {
