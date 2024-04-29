@@ -90,7 +90,7 @@ resource "aws_security_group" "load-balancer-security-group" {
 }
 ```
 
-*and For EC2 instances , inbound rule will be custom TCP for 8000 with source as load balancers and outbound will be anywhere*
+*and For EC2 instances , inbound rule will be custom TCP for 8000 and 22 from anywhere and outbound will be to anywhere*
 
 ```HCL
 resource "aws_security_group" "instance-security-group" {
