@@ -383,8 +383,8 @@ output "lb_dns_name" {
 
 Copy and paste in browser.
 
-<dns> -> you will be redirected to first target group
-<dns>/second.html -> you will be redirected to second target group
+dns -> you will be redirected to first target group
+dns/second.html -> you will be redirected to second target group
 
 
 
