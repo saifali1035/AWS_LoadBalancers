@@ -364,6 +364,30 @@ statement {
 }
 ```
 
+Run below 
+
+```Terraform
+terraform init
+terraform apply
+```
+
+You will get dns for the LB as output using this 
+
+
+```HCL
+output "lb_dns_name" {
+  description = "The DNS name of the load balancer."
+  value       = aws_lb.Web-server-lb.dns_name
+}
+```
+
+Copy and paste in browser.
+
+<dns> -> you will be redirected to first target group
+<dns>/second.html -> you will be redirected to second target group
+
+
+
 
 
 
