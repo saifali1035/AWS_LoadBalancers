@@ -34,7 +34,29 @@ resource "aws_lb" "Web-server-lb" {
 Under **Network mapping**
 1. Under **VPC** select your VPC if you have one or AWS Default VPC will be selected.
 2. In **Mappings** select the pulic AZs.
+```HCL
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
 
+resource "aws_default_subnet" "default_az1" {
+  availability_zone = "ap-south-1a"
+
+  tags = {
+    Name = "Default subnet for us-west-2a"
+  }
+}
+
+resource "aws_default_subnet" "default_az2" {
+  availability_zone = "ap-south-1c"
+
+  tags = {
+    Name = "Default subnet for us-west-2a"
+  }
+}
+```
 
 Under **Security groups**
 1. Create inbound and outbound rules
