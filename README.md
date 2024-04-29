@@ -64,6 +64,31 @@ Under **Security groups**
 
    *In our case we will create an App that will be running on port 8000 so we will create inbound rule to allow traffic from anywhere on port 80 and outbound we will allow outbound traffic to the set instance security groups*
 
+```HCL
+resource "aws_security_group" "load-balancer-security-group" {
+    egress {
+    from_port        = 8000
+    to_port          = 8000
+    protocol         = "tcp"
+    security_groups = [ aws_security_group.instance-security-group.id ]
+  }
+
+   egress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    security_groups = [ aws_security_group.instance-security-group.id ]
+  }
+      ingress {
+      from_port        = 80
+      to_port          = 80
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+      }
+
+}
+```
+
     *and For EC2 instances , inbound rule will be custom TCP for 8000 with source as load balancers and outbound will be anywhere*
 
 Under **Listeners and routing**
