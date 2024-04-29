@@ -251,3 +251,59 @@ echo "Hi this is the second page and this reply is coming from $IP" > /home/ubun
 python3 -m http.server 8000 --directory /home/ubuntu/ &
 ```   
 
+
+Once Created it will look like this 
+
+<img width="1500" alt="image" src="https://github.com/saifali1035/AWS_LoadBalancers/assets/37189361/7821d3c8-ea44-4fb4-91ce-bc6037528e38">
+
+Then we will enable access logs for ALB.
+
+1. Open the load balancer details page by clicking on load balancer name.
+2. Go to Attributes tab.
+3. Meanwhile create a bucket in the same region as ALB.
+4. Enable monitoring and give loaction as S3 bucket.
+
+<img width="1500" alt="image" src="https://github.com/saifali1035/AWS_LoadBalancers/assets/37189361/a6d2905b-4d22-4526-aa76-b9fc3f0355aa">
+
+5. Attach below policy to bucket so ALB service can access S3.
+
+```JSON
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<ALB-service-account>:root"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "<bucket-arn>"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "delivery.logs.amazonaws.com"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "<bucket-arn>",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "delivery.logs.amazonaws.com"
+            },
+            "Action": "s3:GetBucketAcl",
+            "Resource": "arn:aws:s3:::<bucket-name>"
+        }
+    ]
+}
+```
+
+
+
+
