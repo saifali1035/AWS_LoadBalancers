@@ -17,6 +17,19 @@ Under **Basic configuration**
 1. Give your LB a name under **Load balancer name**.
 2. Under **Scheme** set it as **Internet-facing**
 
+```HCL
+resource "aws_lb" "Web-server-lb" {
+    name = "Web-server-lb"
+    internal = false
+    load_balancer_type = "application"
+    security_groups = [aws_security_group.load-balancer-security-group.id] 
+    subnets = [ aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id ]
+      access_logs {
+    bucket  = aws_s3_bucket.lb_logs.id
+    enabled = true
+  }
+    }
+```
 
 Under **Network mapping**
 1. Under **VPC** select your VPC if you have one or AWS Default VPC will be selected.
