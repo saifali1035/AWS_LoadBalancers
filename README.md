@@ -119,7 +119,7 @@ resource "aws_security_group" "instance-security-group" {
 ```
 
 Under **Listeners and routing**
-1. Set the Protocol and Port - *In our case it will be HTTP and 8000*
+1. Set the Protocol and Port - *In our case it will be HTTP and 80* (As our LB will be listening on port 80 for requests)
    
 ```HCL
    resource "aws_lb_listener" "Web-Server-listener" {
@@ -134,6 +134,49 @@ Under **Listeners and routing**
 }
 ```
 3. In this stage we will be asked to select or create a taget group where our requests will be routed.
+We will create 2 seprate taget groups for path based routing.
+```HCL
+resource "aws_lb_target_group" "Web-server-TG" {
+  name     = "tf-web-server-lb-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_default_vpc.default.id
+}
+
+resource "aws_lb_target_group_attachment" "Web-server-TG-attachment" {
+  for_each = {
+    for k, v in aws_instance.Web-server :
+    k => v
+  }
+  target_group_arn = aws_lb_target_group.Web-server-TG.arn
+  target_id        = each.value.id
+  port             = 8000
+}
+
+
+
+
+
+
+
+resource "aws_lb_target_group" "Web-server-2-TG" {
+  name     = "tf-web-server-2-lb-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_default_vpc.default.id
+}
+
+resource "aws_lb_target_group_attachment" "Web-server-2-TG-attachment" {
+  for_each = {
+    for k, v in aws_instance.Web-server-2 :
+    k => v
+  }
+  target_group_arn = aws_lb_target_group.Web-server-2-TG.arn
+  target_id        = each.value.id
+  port             = 8000
+}
+
+```
    
    2.1 Lets create , Under **Basic configuration** select Instances.
    
