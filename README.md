@@ -386,9 +386,3 @@ Copy and paste in browser.
 
 dns -> you will be redirected to first target group
 dns/second.html -> you will be redirected to second target group
-
-
-# 1. Application Load Balancer (HTTP / HTTPS) - Understanding the terraform files
-
-
-
