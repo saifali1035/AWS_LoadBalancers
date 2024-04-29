@@ -233,7 +233,8 @@ resource "aws_instance" "Web-server-2" {
 
 
 ```
-   
+    2.5.1 Ec2 uses below 2 scripts.
+    
 ```bash
 script.sh
 #!/usr/bin/env bash
