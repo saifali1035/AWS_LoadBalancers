@@ -35,6 +35,7 @@ resource "aws_lb" "Web-server-lb" {
 Under **Network mapping**
 1. Under **VPC** select your VPC if you have one or AWS Default VPC will be selected.
 2. In **Mappings** select the pulic AZs.
+   
 ```HCL
 resource "aws_default_vpc" "default" {
   tags = {
@@ -89,7 +90,7 @@ resource "aws_security_group" "load-balancer-security-group" {
 }
 ```
 
-    *and For EC2 instances , inbound rule will be custom TCP for 8000 with source as load balancers and outbound will be anywhere*
+*and For EC2 instances , inbound rule will be custom TCP for 8000 with source as load balancers and outbound will be anywhere*
 
 ```HCL
 resource "aws_security_group" "instance-security-group" {
