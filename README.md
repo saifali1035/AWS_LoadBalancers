@@ -120,7 +120,8 @@ resource "aws_security_group" "instance-security-group" {
 
 Under **Listeners and routing**
 1. Set the Protocol and Port - *In our case it will be HTTP and 8000*
-   ```HCL
+   
+```HCL
    resource "aws_lb_listener" "Web-Server-listener" {
   load_balancer_arn = aws_lb.Web-server-lb.arn
   port              = "80"
@@ -131,8 +132,7 @@ Under **Listeners and routing**
     target_group_arn = aws_lb_target_group.Web-server-TG.arn
   }
 }
-
-   ```
+```
 3. In this stage we will be asked to select or create a taget group where our requests will be routed.
    
    2.1 Lets create , Under **Basic configuration** select Instances.
