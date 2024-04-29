@@ -181,10 +181,30 @@ resource "aws_lb_target_group_attachment" "Web-server-2-TG-attachment" {
    2.1 Lets create , Under **Basic configuration** select Instances.
    
    2.2 Set a **Target group name** and set the port.
+
+   2.3 Create **Listener Rules**
+
+```HCL
+resource "aws_lb_listener_rule" "Web-server-2-rule" {
+  listener_arn = aws_lb_listener.Web-Server-listener.arn
+ priority     = 60
+
+ action {
+   type             = "forward"
+   target_group_arn = aws_lb_target_group.Web-server-2-TG.arn
+ }
+
+ condition {
+   path_pattern {
+     values = ["/second*"]
+   }
+ }
+}
+```
    
-   2.3 Click on create and you will be redirected to a page where you need to register the instances.
+   2.4 Click on create and you will be redirected to a page where you need to register the instances.
    
-   2.4 Create EC2 instances if not already created with below user data and register them as targets.
+   2.5 Create EC2 instances if not already created with below user data and register them as targets.
 ```HCL
 resource "aws_instance" "Web-server" {
   count = 2
